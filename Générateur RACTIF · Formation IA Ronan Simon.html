@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#26105c">
+<meta name="color-scheme" content="light dark">
+<title>Générateur RACTIF · Formation IA Ronan Simon</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+<style>
+:root{--side:#26105c;--bg:#fbfaf7;--card:#fff;--ink:#21183f;--mute:#6b6684;--line:#e4e0f0;--pur:#6b3fd6;--btn:#6b3fd6;--tint:#f1ecff;--terra:#b9603f;--grid:#efecf6}
+@media(prefers-color-scheme:dark){:root{--bg:#17132a;--card:#211b3a;--ink:#f1eefb;--mute:#a8a2c4;--line:#3a3260;--pur:#b79cff;--tint:#2a2250;--grid:#1f1a36}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;display:grid;grid-template-columns:280px 1fr;min-height:100vh;font:17px/1.5 -apple-system,"SF Pro Text",system-ui,sans-serif;color:var(--ink);background:var(--bg);padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+button,a.btn{touch-action:manipulation}
+aside{background:var(--side);color:#fff;padding:26px 16px;position:sticky;top:0;height:100vh;align-self:start;overflow:auto}
+aside small{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#a99bd9}
+aside h1{margin:6px 0 2px;font-size:25px;line-height:1.2}
+aside em{font:italic 19px ui-serif,Georgia,serif;color:#cfc5f5}
+.brand{padding:0 8px 20px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:18px}
+#nav{display:grid;gap:4px;margin-top:10px}
+#nav a{display:flex;align-items:center;gap:12px;min-height:48px;padding:7px 10px;border-radius:12px;color:#e9e3ff;text-decoration:none}
+#nav a:active{background:rgba(255,255,255,.1)}
+#nav b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--c);color:#fff;opacity:.45}
+#nav a.ok b{opacity:1;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
+#nav a.ok::after{content:"✓";margin-left:auto;color:#9ff0c4}
+.pied{margin:26px 8px 0;font-size:13px;color:#a99bd9}
+main{position:relative;padding:30px 40px 70px 58px;max-width:1120px;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+main::before{content:"";position:absolute;left:30px;top:0;bottom:0;width:2px;background:#f2b8b8;opacity:.6}
+h2{margin:0 0 6px;font-size:30px;line-height:1.2}
+.intro{margin:0 0 16px;color:var(--mute);max-width:62ch}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 18px;border:1px solid var(--line);border-radius:12px;font:inherit;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none;color:var(--ink);background:var(--card)}
+.btn:active{transform:scale(.98)}
+.btn.pur{background:var(--btn);color:#fff;border-color:transparent}
+.btn.terra{background:var(--terra);color:#fff;border-color:transparent}
+.btn.ghost{background:var(--tint);color:var(--pur);border-color:var(--line)}
+.btn:focus-visible,textarea:focus-visible,.chips button:focus-visible,#nav a:focus-visible{outline:3px solid var(--pur);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin:20px 0 26px}
+.card{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:14px;padding:14px 16px;scroll-margin-top:20px}
+.card label{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;font-weight:700}
+.card label b{color:var(--c);font:700 24px ui-serif,Georgia,serif}
+.card label i{font-weight:400;font-style:normal;font-size:15px;color:var(--mute)}
+textarea{width:100%;min-height:88px;margin:10px 0;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;font-size:16px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{min-height:40px;padding:6px 12px;border:1px dashed var(--c);border-radius:20px;background:transparent;color:var(--ink);font:inherit;font-size:14px;line-height:1.3;text-align:left;cursor:pointer}
+.chips button:active{background:var(--tint)}
+.out{background:var(--card);border:2px solid var(--pur);border-radius:18px;padding:18px 20px}
+.tete{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.tete h3{margin:0;font-size:19px;color:var(--pur)}
+.tete span{font-size:14px;color:var(--mute)}
+#out{margin:12px 0 16px;padding:16px;min-height:130px;white-space:pre-wrap;word-break:break-word;background:var(--tint);border:1px solid var(--line);border-radius:12px;user-select:text;-webkit-user-select:text}
+#out.vide{color:var(--mute)}
+.rang{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tools{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.tools p{margin:0 0 4px;font-size:14px;color:var(--mute);flex-basis:100%}
+.tools .btn{min-height:42px;font-size:15px}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translate(-50%,20px);padding:12px 20px;border-radius:24px;background:var(--side);color:#fff;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:9}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){body{grid-template-columns:1fr}aside{position:static;height:auto}#nav{grid-template-columns:repeat(3,1fr)}.pied{display:none}main{padding:22px 18px 60px 36px}main::before{left:16px}}
+:root{--simbg:#f6f2ec}
+@media(prefers-color-scheme:dark){:root{--simbg:#1d1833}}
+.sim{margin-top:30px;background:var(--simbg);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.sim.plein{position:fixed;inset:0;z-index:30;border-radius:0;overflow:auto;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+body.fs{overflow:hidden}
+.sintro{padding:20px 22px}
+.sintro small{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--terra)}
+.sintro h3{margin:4px 0 8px;font-size:23px}
+.sintro p{margin:0 0 14px;max-width:80ch;color:var(--mute)}
+.chat{border-top:1px solid var(--line);padding:14px 22px 22px;background:var(--bg)}
+.chat header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px;color:var(--mute)}
+#msgs{height:400px;overflow:auto;padding:10px 0;display:flex;flex-direction:column;gap:14px}
+.sim.plein #msgs{height:48vh}
+.hello{margin:auto;text-align:center}
+.hello span{color:var(--terra);font-size:30px}
+.hello h4{margin:0;font:400 44px ui-serif,Georgia,serif}
+.u{align-self:flex-end;max-width:82%;max-height:200px;overflow:auto;padding:10px 14px;border-radius:16px;background:var(--tint);white-space:pre-wrap}
+.ai{max-width:96%}
+.ai p{margin:0 0 8px}.ai ul{margin:0 0 8px;padding-left:22px}
+.ai table{display:block;overflow-x:auto;border-collapse:collapse;margin:6px 0 10px;font-size:15px}
+.ai th,.ai td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+.ai th{background:var(--tint)}
+.meta{margin-top:4px;font-size:13px;color:var(--mute)}
+.lnk{border:0;background:none;color:var(--pur);font:inherit;font-weight:600;cursor:pointer;padding:8px}
+#cap{margin:8px 0;padding:12px;border:1px dashed var(--terra);border-radius:12px;max-height:230px;overflow:auto;font-size:14px}
+.st{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:5px 0;border-bottom:1px solid var(--line)}
+.st>span:first-child{color:var(--mute)}
+.cd i{display:inline-block;margin:2px 4px 2px 0;padding:2px 8px;border:1px solid var(--line);border-radius:8px;font-style:normal;background:linear-gradient(90deg,var(--tint) var(--p),transparent 0)}
+.cd i.hit{border-color:var(--terra);font-weight:700}
+.box{margin-top:10px;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:18px}
+.box textarea{min-height:56px;margin:0 0 8px;border:0;background:transparent}
+.box textarea:focus-visible{outline:none}
+.box .rang{justify-content:space-between;flex-wrap:nowrap}
+.ic,.go{flex:none;width:46px;height:46px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:22px;cursor:pointer}
+.go{background:var(--terra);color:#fff;border:0}
+.box select{flex:1;min-width:0;max-width:340px;min-height:46px;border:0;background:transparent;color:var(--ink);font:inherit;font-size:15px}
+.quick{margin:14px 0 8px;justify-content:center}
+.quick button{min-height:42px;padding:6px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-size:15px;cursor:pointer}
+.note{margin:10px auto 0;max-width:80ch;font-size:13px;color:var(--mute);text-align:center}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<aside>
+  <div class="brand"><small>Formation IA</small><h1>Ronan Simon</h1><em>Écrire de bons prompts</em></div>
+  <small style="padding:0 8px">La méthode</small>
+  <nav id="nav" aria-label="Éléments RACTIF"></nav>
+  <p class="pied">Formation IA · Ronan Simon</p>
+</aside>
+
+<main>
+  <h2>Générateur RACTIF ✨</h2>
+  <p class="intro">Remplissez les six éléments, touchez une suggestion pour gagner du temps : votre prompt se construit en direct, prêt à coller dans l’outil d’IA de votre choix.</p>
+  <div class="rang"><button class="btn ghost" id="ex" type="button">✨ Charger un exemple</button></div>
+
+  <section class="grid" id="grid"></section>
+
+  <section class="out" aria-labelledby="t-out">
+    <div class="tete"><h3 id="t-out">🚀 Votre prompt généré</h3><span><span id="p">0/6 éléments</span> · <span id="n">0 caractère</span></span></div>
+    <div id="out" class="vide" aria-live="polite"></div>
+    <div class="rang">
+      <button class="btn pur" id="cp" type="button">📋 Copier le prompt</button>
+      <button class="btn terra" id="toSim" type="button">🧪 Tester dans le simulateur</button>
+      <button class="btn" id="clr" type="button">🗑️ Effacer</button>
+    </div>
+    <div class="rang tools">
+      <p>Ou dans une vraie IA : le prompt est copié, puis l’outil s’ouvre dans un nouvel onglet. Collez-le.</p>
+      <a class="btn terra" target="_blank" rel="noopener" href="https://chatgpt.com">ChatGPT</a>
+      <a class="btn terra" target="_blank" rel="noopener" href="https://claude.ai/new">Claude</a>
+      <a class="btn terra" target="_blank" rel="noopener" href="https://chat.mistral.ai/chat">Mistral</a>
+      <a class="btn terra" target="_blank" rel="noopener" href="https://www.perplexity.ai">Perplexity</a>
+      <a class="btn terra" target="_blank" rel="noopener" href="https://duck.ai">DuckAI</a>
+    </div>
+  </section>
+  <section class="sim" id="sim" aria-labelledby="t-sim">
+    <div class="sintro">
+      <small>🧪 Simulateur de LLM · sans crédit · rien n’est envoyé</small>
+      <h3 id="t-sim">Testez vos prompts dans Simul’IA</h3>
+      <p>Un simulateur qui fonctionne comme une IA conversationnelle : il compose sa réponse mot après mot, en tirant chaque mot au sort selon des probabilités. Comparez un prompt express et un prompt RACTIF, itérez (« plus court », « en tableau », « pour des 6e »…), ouvrez « Sous le capot » pour voir les candidats et leur probabilité, et jouez avec la température. Aucune IA réelle n’est appelée : entraînez-vous sans compter.</p>
+      <div class="rang"><button class="btn terra" id="sRactif" type="button">🧪 Tester mon prompt RACTIF</button><button class="btn" id="sFull" type="button">Plein écran ↗</button></div>
+    </div>
+    <div class="chat">
+      <header><span>🧪 <b>Simul’IA</b> · simulateur de LLM pour s’entraîner aux prompts</span><button class="btn" id="sCap" type="button">🔬 Sous le capot</button></header>
+      <div id="msgs"></div>
+      <div id="cap" hidden></div>
+      <div class="box">
+        <textarea id="sIn" rows="2" placeholder="Comment puis-je vous aider aujourd’hui ?"></textarea>
+        <div class="rang">
+          <button class="ic" id="sNew" type="button" aria-label="Nouvelle conversation">+</button>
+          <select id="sT" aria-label="Température du simulateur"><option value="0.3">Simul’IA 1 · Précis (T 0,3)</option><option value="0.8" selected>Simul’IA 1 · Équilibré (T 0,8)</option><option value="1.6">Simul’IA 1 · Créatif (T 1,6)</option></select>
+          <button class="go" id="sGo" type="button" aria-label="Envoyer">↑</button>
+        </div>
+      </div>
+      <div class="rang quick" id="quick"></div>
+      <p class="note">Simulateur pédagogique : les réponses sont composées dans votre navigateur à partir d’une base de contenus, mot après mot, en tirant au sort selon des probabilités — comme un vrai modèle de langage, en beaucoup plus simple. Aucune IA réelle n’est appelée et rien n’est envoyé : entraînez-vous autant que vous voulez. Comme avec une vraie IA, vérifiez ce qui est écrit, et n’y collez pas de données personnelles d’élèves.</p>
+    </div>
+  </section>
+</main>
+<div id="toast" role="status"></div>
+
+<script>
+/* Les six éléments de la méthode : modifiez ici les libellés, questions et suggestions. */
+const CH=[
+{k:"R",n:"Rôle",q:"Qui doit être l’IA ?",c:"#38b27f",ph:"Tu es un professeur de français expérimenté…",ch:["Tu es un professeur expérimenté et pédagogue.","Tu es un expert en pédagogie différenciée.","Tu es un rédacteur professionnel."]},
+{k:"A",n:"Action",q:"Que doit-elle faire ?",c:"#e5675e",ph:"Rédige une séquence de 3 séances sur…",ch:["Crée un exercice progressif sur le thème suivant : ","Résume le texte ci-dessous en 5 points clés.","Propose 5 idées d’activités originales."]},
+{k:"C",n:"Contexte",q:"Dans quelle situation ?",c:"#f0a23a",ph:"Je prépare un cours pour une classe de 6e hétérogène…",ch:["Je prépare un cours pour une classe de 6e.","Je dois présenter ce sujet à des collègues.","Le temps disponible est de 55 minutes."]},
+{k:"T",n:"Tonalité",q:"Sur quel ton ?",c:"#4c9be8",ph:"Bienveillant, clair et motivant, sans jargon.",ch:["Bienveillant et clair.","Professionnel et concis.","Ludique et accessible."]},
+{k:"I",n:"Identité",q:"Qui êtes-vous, pour qui ?",c:"#d86bb0",ph:"Je suis enseignant(e) et je débute avec l’IA…",ch:["Je suis enseignant(e) et je débute avec l’IA.","Je suis responsable pédagogique.","Le public visé est composé d’élèves de collège."]},
+{k:"F",n:"Format",q:"Sous quelle forme ?",c:"#8b6be6",ph:"Un tableau par séance, puis une synthèse de 5 lignes.",ch:["Présente la réponse dans un tableau.","Une liste à puces de 5 points maximum.","Un texte de 150 mots maximum."]}
+];
+const EX={R:"Tu es un professeur de français expérimenté, spécialiste de la pédagogie différenciée.",A:"Rédige une séquence de 3 séances sur le portrait en littérature, avec pour chaque séance un objectif, un déroulé et une trace écrite.",C:"Je prépare cette séquence pour une classe de 6e hétérogène de 28 élèves, dont plusieurs en difficulté de lecture. Chaque séance dure 55 minutes.",T:"Bienveillant, clair et motivant, sans jargon.",I:"Je suis enseignant(e) de lettres et je veux un document utilisable directement en classe.",F:"Un tableau par séance (durée, activité, consigne donnée aux élèves), puis une trace écrite de 5 lignes maximum."};
+const $=s=>document.querySelector(s),KEY="ractif-formation-ia";
+let S={},tm;
+try{S=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+
+$("#grid").innerHTML=CH.map(c=>`<article class="card" id="c${c.k}" style="--c:${c.c}"><label for="f${c.k}"><b>${c.k}</b><span>${c.n}</span><i>${c.q}</i></label><textarea id="f${c.k}" rows="3" placeholder="${c.ph}"></textarea><div class="chips">${c.ch.map((t,i)=>`<button type="button" data-k="${c.k}" data-i="${i}">${t}</button>`).join("")}</div></article>`).join("");
+$("#nav").innerHTML=CH.map(c=>`<a href="#c${c.k}" data-k="${c.k}" style="--c:${c.c}"><b>${c.k}</b>${c.n}</a>`).join("");
+
+const val=k=>(S[k]||"").trim();
+const build=()=>CH.filter(c=>val(c.k)).map(c=>`# ${c.n}\n${val(c.k)}`).join("\n\n");
+const fill=()=>CH.forEach(c=>{$("#f"+c.k).value=S[c.k]||""});
+function up(){
+  const t=build(),o=$("#out");
+  o.textContent=t||"Remplissez les champs ci-dessus — votre prompt apparaît ici en temps réel.";
+  o.classList.toggle("vide",!t);
+  $("#n").textContent=t.length+" caractère"+(t.length>1?"s":"");
+  $("#p").textContent=CH.filter(c=>val(c.k)).length+"/6 éléments";
+  CH.forEach(c=>$("#nav [data-k="+c.k+"]").classList.toggle("ok",!!val(c.k)));
+  try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tm);tm=setTimeout(()=>t.classList.remove("on"),2200)}
+function copy(){
+  const t=build();
+  if(!t){toast("Remplissez au moins un champ.");return false}
+  const a=document.createElement("textarea");
+  a.value=t;a.setAttribute("readonly","");a.style.cssText="position:fixed;top:0;opacity:0";
+  document.body.appendChild(a);a.select();a.setSelectionRange(0,t.length);
+  let ok=false;try{ok=document.execCommand("copy")}catch(e){}
+  a.remove();
+  if(!ok&&navigator.clipboard)navigator.clipboard.writeText(t).catch(()=>{});
+  toast("Prompt copié ✓");return true;
+}
+
+document.addEventListener("input",e=>{if(e.target.matches("#grid textarea")){S[e.target.id.slice(1)]=e.target.value;up()}});
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-i]");
+  if(b){const c=CH.find(x=>x.k===b.dataset.k);S[c.k]=c.ch[b.dataset.i];fill();up();return}
+  const a=e.target.closest("#nav a");
+  if(a){e.preventDefault();$("#c"+a.dataset.k).scrollIntoView({behavior:"smooth",block:"center"})}
+});
+$("#ex").onclick=()=>{S={...EX};fill();up()};
+$("#cp").onclick=copy;
+$("#clr").onclick=()=>{
+  if(build()&&!confirm("Effacer tous les champs ?"))return;
+  S={};fill();up();
+};
+document.querySelectorAll(".tools a").forEach(a=>a.addEventListener("click",e=>{if(!copy())e.preventDefault()}));
+/* ===== Simul’IA : un « modèle de langage » minuscule =====
+   Base de contenus : {option:poids|option:poids}. Chaque groupe est un tirage au sort,
+   pondéré par poids^(1/T) (T = température), comme le choix du mot suivant dans un LLM. */
+const G={
+seance:[["Objectif","Les élèves {sauront:5|pourront:3} {expliquer:4|reconnaître:3|utiliser:3} les notions essentielles de [s]."],["Accroche (10 min)","{Une question:4|Un document:3|Une courte vidéo:2} {pour lancer:5|pour introduire:2} [s], avec recueil des idées de la classe."],["Découverte (20 min)","{Travail en binômes:5|Observation guidée:3|Recherche en îlots:2} autour d’{un exemple:5|un document:3} sur [s]."],["Activité (20 min)","{Production individuelle:4|Exercice d’application:4|Mini-défi en groupes:2}, avec {différenciation:5|étayage:3} pour [n]."],["Trace écrite (5 min)","{Synthèse:5|Résumé:3|Carte mentale:2} collective de [s], recopiée dans le cahier."]],
+qcm:[["Question 1","{Quelle proposition:5|Parmi ces propositions, laquelle:3} {décrit:5|résume:3} le mieux [s] ? (A) une définition précise, (B) un exemple isolé, (C) une opinion."],["Question 2","{Dans quel cas:5|À quel moment:3} faut-il {revoir:5|mobiliser:3} [s] ? (A) toujours, (B) selon le contexte, (C) jamais."],["Question 3","Quelle {erreur:5|confusion:3} est la plus {fréquente:5|courante:3} à propos de [s] ? (A) le vocabulaire, (B) la méthode, (C) aucune."],["Question 4","Pour [n], quel {exemple:5|cas:3} illustre [s] ? (A) un cas concret, (B) un hors-sujet, (C) une exception."],["Corrigé","1-A · 2-B · 3-A · 4-A. {Faites justifier:5|Demandez de justifier:3} chaque réponse à l’oral."]],
+exo:[["Niveau 1 · S’échauffer","Un exercice {court:5|rapide:3} pour {vérifier:5|consolider:3} la compréhension de [s]."],["Niveau 2 · S’entraîner","{Trois:5|Quatre:2} questions d’application sur [s], pensées pour [n]."],["Niveau 3 · Aller plus loin","Une situation {complexe:5|ouverte:3} où les élèves {mobilisent:5|réinvestissent:3} [s]."],["Correction","Prévoyez un {corrigé:5|barème:3} {détaillé:5|simple:3} et une {auto-évaluation:4|grille de réussite:4}."],["Différenciation","Un coup de pouce {écrit:4|oral:3} pour les élèves {en difficulté:5|qui en ont besoin:3}."]],
+bull:[["Élève investi(e)","{Bon:5|Très bon:3} trimestre : {participation active:5|travail sérieux:4} et {résultats solides:5|belle implication:3}. {Continuez ainsi:6|Poursuivez vos efforts:4}."],["Élève fragile","Des résultats {encore fragiles:5|à consolider:4} ; un {travail régulier:5|effort de méthode:3} est {attendu:5|nécessaire:3}."],["Élève en progrès","Une {belle:5|nette:3} {progression:5|évolution:3} ce trimestre. {Bravo:5|Félicitations:3} pour {cet effort:5|ce travail:3}."],["Élève à encourager","Des {capacités:5|qualités:3} réelles : {osez:5|n’hésitez pas à:3} {participer davantage:5|prendre la parole:3}."],["Rappel","N’indiquez {aucun nom:5|aucune donnée personnelle:3} d’élève dans un outil d’IA."]],
+ecrire:[["Objet","{Information:4|Rappel:3|Invitation:3} · [s]"],["Message","{Bonjour:6|Chers parents:3}, je vous {écris:4|contacte:4} au sujet de [s]. {Merci:5|Nous vous remercions:3} de votre {attention:5|confiance:3}."],["Suite","{N’hésitez pas à:5|Vous pouvez} me {contacter:5|répondre:3} pour toute {question:5|précision:3}."],["Signature","{Cordialement:6|Bien à vous:3}"]],
+apprendre:[["Définition","[s] {désigne:5|correspond à:3} une notion {clé:5|centrale:3} que l’on peut {expliquer simplement:4|illustrer par des exemples:4}."],["L’essentiel","Retenez {trois idées:5|quelques repères:3} : le {vocabulaire:5|principe:3}, un {exemple:5|cas concret:3} et {une limite:4|une erreur fréquente:4}."],["Exemple","{Imaginez:5|Prenons:4} une situation {simple:5|du quotidien:4} pour {comprendre:5|illustrer:3} [s], pensée pour [n]."],["Pour aller plus loin","{Vérifiez:5|Croisez:3} ces informations avec des {sources fiables:6|ressources officielles:3}."]],
+gen:[["Piste 1","{Clarifier:5|Définir:3} l’objectif lié à [s]."],["Piste 2","{Repérer:5|Identifier:3} le public et ses {besoins:5|attentes:3}."],["Piste 3","{Tester:5|Expérimenter:3} une {première version:5|ébauche:3}, puis l’{ajuster:5|améliorer:3}."]]
+};
+const EV=["Évaluation","{Quelques questions:5|Un court quiz:3} {pour vérifier:5|pour mesurer:3} les acquis sur [s]."];
+const Q={"✍️ Écrire":"Écris un message aux parents sur une sortie scolaire.","🎓 Apprendre":"Explique-moi simplement ce qu’il faut savoir sur les fractions.","📝 Exercices":"Crée des exercices sur les fractions.","✅ QCM":"Fais un QCM sur la Révolution française.","📅 Séance":"Prépare une séance sur le portrait en littérature.","📋 Bulletins":"Rédige des appréciations de bulletin sur la participation en classe."};
+let SP={},TT=.8,tid;
+const cl=s=>s.replace(/[{}|\[\]*<>&]/g,"").trim();
+
+const md=t=>{
+  const f=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+  let h="",b=[],k="";
+  const fl=()=>{if(b.length)h+=k=="t"?"<table>"+b.map((r,i)=>"<tr>"+r.replace(/^\||\|\s*$/g,"").split("|").map(c=>`<t${i?"d":"h"}>${f(c.trim())}</t${i?"d":"h"}>`).join("")+"</tr>").join("")+"</table>":k=="u"?"<ul>"+b.map(x=>"<li>"+f(x.slice(2))+"</li>").join("")+"</ul>":b.map(x=>"<p>"+f(x)+"</p>").join("");b=[]};
+  t.split("\n").forEach(l=>{const c=l[0]=="|"?"t":l.startsWith("- ")?"u":l.trim()?"p":"";if(c!=k){fl();k=c}if(c&&!(c=="t"&&/^\|[-| :]+$/.test(l.trim())))b.push(l)});
+  fl();return h};
+
+/* Analyse du message : met à jour la « demande » (SP) ; les messages suivants l’affinent. */
+function parse(m){
+  const a=(m.match(/# Action\n([^#]*)/)||[])[1]||m,al=a.toLowerCase(),l=m.toLowerCase();
+  const t=[["qcm",/qcm|quiz/],["exo",/exercice|entra[iî]n/],["seance",/séance|séquence|cours|leçon|progression/],["bull",/bulletin|appréciation/],["ecrire",/écri|rédig|mail|courriel|message|lettre/],["apprendre",/apprend|expliq|comprend|définition|résum/]].find(x=>x[1].test(al));
+  if(t)SP.task=t[0];SP.task=SP.task||"gen";
+  const tp=a.match(/\bsur (?:le |la |les |l[’']|un |une |des |du |de la )?([^.,;:\n()]{3,40})/i);if(tp)SP.s=cl(tp[1]);
+  const r=(m.match(/(?:tu es|agis comme|agis en tant que) (?:un |une |le |la |l[’'])?([^.,;\n]{3,50})/i)||[])[1];if(r)SP.r=cl(r);
+  const lv=l.match(/6e|5e|4e|3e|ce1|ce2|cm1|cm2|seconde|terminale|lycée|collège|primaire/);if(lv)SP.lvl=lv[0];
+  const f=/tableau/.test(l)?"tableau":/puces|liste/.test(l)?"liste":/paragraphe|en texte/.test(l)?"texte":"";if(f)SP.f=f;
+  const ln=/plus court|bref|concis|court/.test(l)?"court":/plus long|détaillé|approfondi/.test(l)?"long":"";if(ln)SP.len=ln;
+  const tn=l.match(/bienveillant|ludique|professionnel|formel|simple|accessible|humoristique|motivant|chaleureux/);if(tn)SP.ton=tn[0];
+}
+function compose(){
+  const n=SP.lvl?"le niveau "+SP.lvl:"votre classe",s=SP.s?"« "+SP.s+" »":"ce sujet",
+    all=G[SP.task],it=SP.len=="court"?all.slice(0,2):SP.len=="long"?[...all,EV]:all,
+    f=SP.f||(["ecrire","apprendre","gen"].includes(SP.task)?"texte":"liste"),
+    body=f=="tableau"?"| Étape | Contenu |\n|---|---|\n"+it.map(i=>`| ${i[0]} | ${i[1]} |`).join("\n"):f=="liste"?it.map(i=>`- **${i[0]}** : ${i[1]}`).join("\n"):it.map(i=>`**${i[0]}.** ${i[1]}`).join("\n\n"),
+    poor=["r","lvl","f","ton"].filter(k=>SP[k]).length<2;
+  return((SP.r?`Je réponds en tant que ${SP.r}. `:"")+`{Voici:6|Bien sûr ! Voici:3} {une proposition:5|une première version:3|une piste:2}${SP.ton?" dans un ton "+SP.ton:""} pour ${s} :\n\n${body}\n\n`+(poor?"Pour affiner, précisez le {public:5|niveau:3}, le contexte et le format attendu. ":"")+"{Souhaitez-vous:5|Voulez-vous:3} que {j’adapte:5|je reformule:3} cette proposition ? Essayez « plus court », « en tableau » ou « pour des 6e ».").replace(/\[s\]/g,()=>s).replace(/\[n\]/g,()=>n);
+}
+const info=()=>{const u=[["r","rôle"],["s","sujet"],["lvl","niveau"],["f","format"],["ton","ton"],["len","longueur"]].filter(x=>SP[x[0]]).map(x=>x[1]);return u.length>3?"🔎 Pris en compte : "+u.join(", ")+".":"🔎 Peu de précisions détectées"+(u.length?" ("+u.join(", ")+")":"")+" : la réponse reste générique."};
+
+/* Tirage au sort des mots, puis affichage mot après mot. */
+function say(){
+  clearInterval(tid);TT=+$("#sT").value;
+  const st=[],txt=compose().replace(/\{([^}]+)\}/g,(_,g)=>{
+    const o=g.split("|").map(x=>{const m=x.match(/^(.*):(\d+)$/);return m?{t:m[1],w:+m[2]}:{t:x,w:1}}),
+      p=o.map(x=>x.w**(1/TT)),z=p.reduce((a,b)=>a+b);
+    let r=Math.random()*z,j=0;while(j<o.length-1&&(r-=p[j])>=0)j++;
+    st.push({o:o.map((x,i)=>({t:x.t,p:p[i]/z})),j});
+    return "\u0001"+(st.length-1)+"\u0002"+o[j].t;
+  }),tk=txt.match(/\S+\s*/g)||[],box=$("#msgs"),cap=$("#cap"),el=document.createElement("div");
+  el.className="ai";box.appendChild(el);
+  cap.innerHTML=`<p class="meta">Chaque mot est tiré au sort parmi des candidats ; la température (T = ${String(TT).replace(".",",")}) règle l’audace du tirage.</p>`;
+  let shown="",i=0;
+  tid=setInterval(()=>{
+    if(i>=tk.length){clearInterval(tid);el.insertAdjacentHTML("beforeend",`<div class="meta">${info()} <button class="lnk" id="rg" type="button">↻ Régénérer</button></div>`);box.scrollTop=box.scrollHeight;return}
+    const w=tk[i++].replace(/\u0001(\d+)\u0002/g,(_,d)=>{
+      const s=st[d];
+      cap.insertAdjacentHTML("beforeend",`<div class="st"><span>…${shown.replace(/[*|]/g,"").trim().split(/\s+/).slice(-3).join(" ")}</span><span class="cd">${s.o.map((x,q)=>`<i class="${q==s.j?"hit":""}" style="--p:${Math.round(x.p*100)}%">${x.t} ${Math.round(x.p*100)} %</i>`).join("")}</span></div>`);
+      cap.scrollTop=cap.scrollHeight;return"";
+    });
+    shown+=w;el.innerHTML=md(shown);box.scrollTop=box.scrollHeight;
+  },38);
+}
+function send(m){
+  m=(m||$("#sIn").value).trim();if(!m)return;
+  $("#sIn").value="";
+  const b=$("#msgs"),u=document.createElement("div");
+  b.querySelector(".hello")?.remove();document.querySelectorAll("#rg").forEach(x=>x.remove());
+  u.className="u";u.textContent=m;b.appendChild(u);parse(m);say();
+}
+const hi=()=>{clearInterval(tid);SP={};$("#cap").innerHTML="";$("#msgs").innerHTML=`<div class="hello"><span>✦</span><h4>${new Date().getHours()<18?"Bonjour":"Bonsoir"}</h4></div>`};
+
+$("#sGo").onclick=()=>send();
+$("#sIn").addEventListener("keydown",e=>{if(e.key=="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();send()}});
+$("#sNew").onclick=hi;
+$("#sCap").onclick=()=>{const c=$("#cap");c.hidden=!c.hidden};
+$("#sFull").onclick=()=>{const f=$("#sim").classList.toggle("plein");document.body.classList.toggle("fs",f);$("#sFull").textContent=f?"Quitter ✕":"Plein écran ↗"};
+$("#sRactif").onclick=$("#toSim").onclick=()=>{const t=build();if(!t){toast("Remplissez d’abord quelques champs.");return}hi();$("#sim").scrollIntoView({behavior:"smooth"});send(t)};
+document.addEventListener("click",e=>{if(e.target.id=="rg"){$("#msgs").lastElementChild.remove();say()}});
+$("#quick").innerHTML=Object.keys(Q).map(k=>`<button type="button">${k}</button>`).join("");
+$("#quick").onclick=e=>{const b=e.target.closest("button");if(b)$("#sIn").value=Q[b.textContent]};
+$("#nav").insertAdjacentHTML("beforeend",'<a href="#sim" id="goSim" style="--c:#b9603f"><b>🧪</b>Simul’IA</a>');
+$("#goSim").onclick=e=>{e.preventDefault();e.stopPropagation();$("#sim").scrollIntoView({behavior:"smooth"})};
+hi();
+fill();up();
+</script>
+</body>
+</html>
